@@ -1,4 +1,10 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://slamtech.dev/'
 locale = 'en-us'
-title = 'My New Hugo Project'
+title = 'Sean Lam'
 theme = 'risotto'
+
+[params.theme]
+palette = 'windows-95'
+
+[params]
+customCSS = ["static/css/custom.css"]
