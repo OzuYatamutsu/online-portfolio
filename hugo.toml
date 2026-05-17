@@ -26,3 +26,22 @@ url = "https://www.linkedin.com/in/slam36/"
 icon = "fa-solid fa-envelope"
 title = "Email"
 url = "mailto:run@slamtech.dev"
+
+[menu]
+  [[menu.main]]
+    identifier = "projects"
+    name = "Projects"
+    url = "/projects/"
+    weight = 10
+
+  [[menu.main]]
+    identifier = "credentials"
+    name = "Credentials"
+    url = "/credentials/"
+    weight = 10
+
+  [[menu.main]]
+    identifier = "hire"
+    name = "Hire"
+    url = "/hire/"
+    weight = 10
