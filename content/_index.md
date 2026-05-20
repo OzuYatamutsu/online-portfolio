@@ -4,7 +4,7 @@ draft = false
 title = "Home"
 +++
 
-![](/images/profile.png)
+![](/images/profile.jpg)
 # About
 I'm a backend software engineer, specializing in building reliable infrastructure. I build consistent, scalable distributed systems which treat failure as inevitable and are designed to fail gracefully.
 
