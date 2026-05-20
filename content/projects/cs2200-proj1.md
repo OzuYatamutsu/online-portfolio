@@ -2,6 +2,7 @@
 date = '2014-09-14T12:00:00+02:00'
 draft = false
 title = '16-bit processor and ISA'
+description = 'A 16-bit processor simulated in Logisim.'
 +++
 A series of logic circuits built in the simulation software Logisim which simulates a 16-bit processor, able to load and execute assembled hex code from its own defined instruction set.
 

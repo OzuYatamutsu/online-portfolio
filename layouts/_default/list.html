@@ -8,13 +8,12 @@
         <header class="post__header">
             <h1><a href="{{ .Permalink }}">{{ .Title | markdownify }}</a></h1>
             <p class="post__meta">
-                {{ .Params.summary }},
-                <span class="date">{{ .Date.Format "2 January 2006" }}</span>
+                <span class="date"><i>{{ .Date.Format "January 2, 2006" }}</i></span>
             </p>
         </header>
 
         <section class="post__summary">
-            {{ .Summary }}
+            {{ .Params.description }}
         </section>
     </article>
     {{ end }}
