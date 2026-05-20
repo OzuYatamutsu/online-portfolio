@@ -12,4 +12,3 @@ I was a Cisco Certified Network Professional (CCNP) between 2013 and 2016. [[cer
 I was awarded the Microsoft Technology Associate: Networking Fundamentals certification in 2013. [[certificate](/files/NetworkingMTA.pdf)]
 
 I was awarded the CompTIA A+ certification in 2010. [[certificate](/files/Acert.pdf)]
-
