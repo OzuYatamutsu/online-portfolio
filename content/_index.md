@@ -6,13 +6,11 @@ title = "Home"
 
 ![](/images/profile.jpg)
 # About
-I'm a backend software engineer, specializing in building reliable infrastructure. I build consistent, scalable distributed systems which treat failure as inevitable and are designed to fail gracefully.
+I'm a backend software engineer who builds reliable infrastructure. Drawing from my experience in operations, I build  distributed systems which are observable, treat failure as inevitable, and degrade gracefully under load.
 
-I'm an advocate for reducing human hours via automation whenever possible, and treating them as valuable when they can't be eliminated entirely. Issues which can be anticipated and remediated by software shouldn't bother engineers, and issues which can't should provide enough context such that engineers can resolve them quickly.
+My areas of expertise are in database systems, computer networking, and cloud computing, and I'm an advocate for reducing human hours via automation whenever possible.
 
-Besides software automation, my other areas of expertise are in database systems, computer networking, and cloud computing.
-
-I perform remote IT work and home networking as a hobby -- see the [hire](/hire) section for more details.
+I also perform remote IT work and home networking as a hobby -- see the [hire](/hire) section for more details.
 
 # Skills
 A better representation of my skillset and how I apply them can be found in the [hire](/hire) or [projects](/projects) sections.
