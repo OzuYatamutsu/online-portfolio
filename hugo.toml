@@ -1,6 +1,6 @@
 baseURL = 'https://slamtech.dev/'
 locale = 'en-us'
-title = 'Sean Lam'
+title = 'slamtech'
 theme = 'risotto'
 
 [params.theme]
