@@ -12,8 +12,10 @@ I'm an advocate for reducing human hours via automation whenever possible, and t
 
 Besides software automation, my other areas of expertise are in database systems, computer networking, and cloud computing.
 
+I perform remote IT work and home networking as a hobby -- see the [hire](/hire) section for more details.
+
 # Skills
-A better representation of my skillset and how I apply them can be found in the [hire]() or [projects]() sections.
+A better representation of my skillset and how I apply them can be found in the [hire](/hire) or [projects](/projects) sections.
 
 Below is a non-exhaustive list of the tools I'm familiar with and use:
 
