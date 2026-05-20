@@ -1,21 +1,20 @@
 {{ define "main" }}
     <h1 id="{{ .Title | urlize }}">{{ .Title | markdownify }}</h1>
-
     {{ .Content }}
 
     {{ range .Pages }}
     <article class="post">
         <header class="post__header">
-            <h1><a href="{{ .Permalink }}">{{ .Title | markdownify }}</a></h1>
+            <h2><a href="{{ .Permalink }}">{{ .Title | markdownify }}</a></h2>
             <p class="post__meta">
-                <span class="date"><i>{{ .Date.Format "January 2, 2006" }}</i></span>
+                <span class="date">—— <i>{{ .Date.Format "January 2006" }}</i></span>
             </p>
         </header>
-
         <section class="post__summary">
             {{ .Params.description }}
         </section>
     </article>
+    <br />
     {{ end }}
     </ul>
 
