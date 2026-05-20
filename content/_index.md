@@ -36,3 +36,8 @@ Below is a non-exhaustive list of the tools I'm familiar with and use:
 - Kubernetes
 - Docker
 - Ansible
+
+## Typesetting languages
+- LaTeX [[example](/files/latex_example.pdf)]
+- Markdown [[example](https://github.com/OzuYatamutsu/project-overengineer)]
+- Mermaid [[example](https://github.com/OzuYatamutsu/project-overengineer)]
