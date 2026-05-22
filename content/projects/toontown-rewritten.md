@@ -6,4 +6,6 @@ description = "Online free MMORPG"
 +++
 Toontown Rewritten is a volunteer-run massively multiplayer online role-playing game (MMORPG), with over 1.7 million registered players.
 
+{{< video src="/videos/proj-toontown.mp4" >}}
+
 [[Hosted project](https://www.toontownrewritten.com/)]
