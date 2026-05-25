@@ -12,7 +12,7 @@ Managing MySQL database hosts was previously done via a series of scripts invoke
 - Build a replica: Prepare an empty Linux machine into a replica MySQL database host against a provided existing primary database host.
 - Move CNAME: Move the DNS record associated with a primary or replica MySQL host from one host to another.
 
-However, since their creation, management and running of these scripts began to prove move and more problematic over time:
+However, since their creation, management and running of these scripts became more problematic over time:
 
 - The scripts did not display progress, leading to confusion as to whether they were running or hung.
 - The scripts hung or crashed often, due to a combination of script, metadata, or networking issues.

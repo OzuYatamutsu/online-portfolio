@@ -6,7 +6,7 @@ title = "Home"
 
 ![](/images/profile.jpg)
 # About
-I'm a backend software engineer who builds reliable infrastructure. Drawing from my experience in operations, I build  distributed systems which are observable, treat failure as inevitable, and degrade gracefully under load.
+I'm a backend software engineer who builds reliable infrastructure. Drawing from my experience in operations, I build distributed systems which are observable, treat failure as inevitable, and degrade gracefully under load.
 
 My areas of expertise are in database systems, computer networking, and cloud computing, and I'm an advocate for reducing human hours via automation whenever possible.
 

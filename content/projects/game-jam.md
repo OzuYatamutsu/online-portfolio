@@ -5,7 +5,7 @@ title = 'Game jam'
 description = "A challenge to make six games in three months"
 +++
 ## Background
-Ever since I was a kid, I wanted to make video games. A huge step in the right direction was joining the Toontown Rewritten [link] team, but I realized after a while that I was leaning heavily on my programming ability. Programming is a very versatile skill, which meant I didn't need to develop the game design or other creative skills that I lacked. In short, even though I was a game programmer, I didn't know how to actually make games.
+Ever since I was a kid, I wanted to make video games. A huge step in the right direction was joining the Toontown Rewritten [[link](/projects/toontown-rewritten)] team, but I realized after a while that I was leaning heavily on my programming ability. Programming is a very versatile skill, which meant I didn't need to develop the game design or other creative skills that I lacked. In short, even though I was a game programmer, I didn't know how to actually make games.
 
 I made a plan! I would pick a game engine and learn it well enough that I wouldn't feel held back when the time came to make something. Then, I would force myself to develop six game proof of concepts in the game engine within three months. They didn't all have to be good, but they all had to be complete ideas.
 
