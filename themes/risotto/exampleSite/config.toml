@@ -4,6 +4,7 @@ title = "risotto demo"
 author = "Joe Roe"
 copyright = "© [Joe Roe](https://joeroe.io) & [risotto contributors](https://github.com/joeroe/risotto/graphs/contributors)."
 languageCode = "en"
+locale = "en-US"
 DefaultContentLanguage = "en"
 enableInlineShortcodes = true
 # prevent build failures when using Hugo's Instagram shortcode due to deprecated Instagram API.
