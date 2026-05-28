@@ -35,6 +35,7 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: hugo-assets
+          path: ./public
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3.9.3
