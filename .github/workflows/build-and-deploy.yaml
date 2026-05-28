@@ -12,6 +12,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install hugo
+        run: sudo snap install hugo
+
       - name: Build hugo assets
         run: hugo build
       
