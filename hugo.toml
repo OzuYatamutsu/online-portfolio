@@ -1,4 +1,4 @@
-baseURL = 'https://slamtech.dev/'
+baseURL = 'https://ozuyatamutsu.github.io/online-portfolio/'
 locale = 'en-us'
 title = 'slamtech'
 theme = 'risotto'
