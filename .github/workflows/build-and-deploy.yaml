@@ -5,6 +5,9 @@ on:
       - main
       - feature/hugo-build-to-github-pages
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
