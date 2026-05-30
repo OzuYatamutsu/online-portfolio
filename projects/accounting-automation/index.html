@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head><title>Accounting automation &ndash; slamtech</title>
+<meta name="description" content="Backend Infrastructure Engineer">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8"/>
+
+
+
+<link rel="stylesheet" href="https://slamtech.dev/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://slamtech.dev/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://slamtech.dev/css/palettes/windows-95.css">
+<link rel="stylesheet" href="https://slamtech.dev/css/risotto.css">
+<link rel="stylesheet" href="https://slamtech.dev/css/custom.css">
+
+
+<link rel="icon" href="https://slamtech.dev/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="https://slamtech.dev/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://slamtech.dev/favicon-16x16.png">
+<link rel="apple-touch-icon" href="https://slamtech.dev/apple-touch-icon.png">
+<link rel="manifest" href="https://slamtech.dev/site.webmanifest">
+
+
+
+
+
+<meta property="og:title" content="Accounting automation &ndash; slamtech" />
+<meta property="og:url" content="https://slamtech.dev/projects/accounting-automation/" />
+
+  <meta property="og:description" content="Scripts to automate small business accounting tasks &ndash; "/> 
+
+<meta property="og:locale" content="en-us" />
+<meta property="og:image" content="" />
+</head>
+
+    <body>
+        <div class="page">
+
+            <header class="page__header"><nav class="page__nav main-nav">
+    <ul>
+      <li class="nomarker"><h1 class="page__logo"><a href="https://slamtech.dev/" class="page__logo-inner">slamtech</a></h1></li>
+    
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="https://slamtech.dev/credentials/" title="">Credentials</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="https://slamtech.dev/hire/" title="">Hire</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="https://slamtech.dev/projects/" title="">Projects</a></li>
+    
+    </ul>
+</nav>
+
+</header>
+
+            <section class="page__body">
+    <header class="content__header">
+        <h1>Accounting automation</h1>
+    </header>
+    <div class="content__body">
+        <h2 id="background">Background</h2>
+<p>In 2022, I started to take on some software consultancy work as an independent contractor. As the work became more regular, I decided to formally start a small business to represent myself.</p>
+<p>In the United States, a small business structured as a subchapter S corporation carries some tax benefits and simplification in some areas, but complication in others. Accurate accounting records, including taxes associated with the company and taxes associated with payroll, must be kept. Taxes must be deposited and filed on set schedules, or a penalty is risked for being out of compliance.</p>
+<p>I had a few recurring issues to solve:</p>
+<ul>
+<li>How do I keep accurate accounting records?</li>
+<li>How can I issue and track invoices, paystubs, and requests for reimbursement?</li>
+<li>How do I make sure taxes are withheld accurately, paid, and filed on time?</li>
+</ul>
+<p>Prior to starting the company, I spent a few months brushing up on small business accounting before getting to work structuring my accounting system. Eventually, I settled on:</p>
+<ul>
+<li><a href="https://www.gnucash.org/index.phtml?lang=en_US">GnuCash</a> to manage the accounts</li>
+<li><a href="https://www.latex-project.org/">LaTeX</a> to compile documents such as invoices and paystubs</li>
+<li>Microsoft Excel to track summaries per employee (e.g., YTD earnings, taxes paid, etc.)</li>
+</ul>
+<p><img src="/images/projects_accounting_01.png" alt=""></p>
+<p>These all had the benefit of being free, being around for a long time, and having multiple options to access and manipulate data via scripting languages. Once the company was up and running for a few months, I decided to start automating some of the processes that took me the most time. I used the Python programming language due to easily available libraries to interface with all three technologies I used to manage my business.</p>
+<h2 id="the-flow-of-payment">The flow of payment</h2>
+<p><img src="/images/projects_accounting_02.png" alt=""></p>
+<p>In my business, contracted work is done for customers at a fixed rate. At set periods of time, an invoice is issued to bill for the hours worked for the customer. Once the bill is paid, the employee that worked for the customer is entitled to the money that was earned, minus an amount withheld for company expenses. The money that is paid out to the employee is subject to a pre-tax deduction associated with the company retirement plan as well as standard payroll taxes and withholding. Finally, taxes are paid at the end of each month and filed quarterly.</p>
+<h2 id="automating-invoice-document-creation">Automating invoice document creation</h2>
+<p>Automating creation of the invoice was the easiest place to start. I wrote the invoice template in the LaTeX language, so all that needed to be done was to wrap a script around it to ask for the numbers to insert into the document, and the invoice is generated in a second or so.</p>
+<p><img src="/images/projects_accounting_03.png" alt=""></p>
+<p><img src="/images/projects_accounting_04.png" alt=""></p>
+<h2 id="automating-paystub-document-creation">Automating paystub document creation</h2>
+<p>It was a similar story to create the paystub document, just with different questions and calculations. Because the rates for paystub deductions are constant, they can be calculated on the fly with correct numbers being inserted into the document issued to employees.</p>
+<p><img src="/images/projects_accounting_05.png" alt="">
+<img src="/images/projects_accounting_06.png" alt=""></p>
+<h2 id="automating-journal-entries">Automating journal entries</h2>
+<p>Because GnuCash is open-source and has been around for a long time, there are several libraries to interface with the data outside of the application (such as piecash). Since the existing scripts to generate invoices and paystubs both correspond with making entries in the accounting journal, I added this functionality to both scripts so that the correct entries can be made at the same time the document is created. This saves a huge amount of time making the entries manually, as every entry on the document corresponds to two entries in the journal (due to using double-entry bookkeeping).</p>
+<p><img src="/images/projects_accounting_07.png" alt="">
+<img src="/images/projects_accounting_08.png" alt=""></p>
+<h2 id="further-work">Further work</h2>
+<p>As of April 2023, these were the greatest wins in terms of time saved managing the company&rsquo;s finances. Since the accounting books are accessible via Python API, other work which can be automated in future include:</p>
+<ul>
+<li>Compiling the balance sheet, profit and loss statement, and statement of cash flows to distribute to employees at the end of each quarter</li>
+<li>Automatically emailing invoices/paystubs to customers/employees as they are created</li>
+<li>Automatically filling out quarterly tax forms based on the numbers and employee data in the accounting records</li>
+</ul>
+
+    </div>
+    <footer class="content__footer"></footer>
+
+            </section>
+
+            <section class="page__aside">
+                <div class="aside__about">
+<div class="aside__about">
+    
+    
+<h1 class="about__title">Sean Lam</h1>
+<p class="about__description">Backend Infrastructure Engineer</p>
+</div>
+
+
+<ul class="aside__social-links">
+    
+    <li>
+        <a href="https://github.com/OzuYatamutsu" rel="me" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://www.linkedin.com/in/slam36/" rel="me" aria-label="LinkedIn" title="LinkedIn"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="mailto:run@slamtech.dev" rel="me" aria-label="Email" title="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+</ul>
+
+</div>
+                <hr>
+                <div class="aside__content">
+    Resume available <a href="/files/resume.pdf">here</a>.
+
+                </div>
+            </section>
+
+            <footer class="page__footer"><p class="advertisement">Site generated by <a href="https://github.com/OzuYatamutsu/online-portfolio">OzuYatamutsu/online-portfolio</a>.</p>
+</footer>
+
+        </div>
+    </body>
+
+</html>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Projects on slamtech</title>
+		<link>https://slamtech.dev/projects/</link>
+		<description>Recent content in Projects on slamtech</description>
+		<generator>Hugo</generator>
+		<language>en-us</language>
+		
+		
+		
+		
+			<lastBuildDate>Mon, 26 Jun 2023 01:27:53 +0200</lastBuildDate>
+		
+			<atom:link href="https://slamtech.dev/projects/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>3D game study</title>
+				<link>https://slamtech.dev/projects/3d-game-study/</link>
+				<pubDate>Mon, 26 Jun 2023 01:27:53 +0200</pubDate>
+				<guid>https://slamtech.dev/projects/3d-game-study/</guid>
+				<description>&lt;video controls width=&#34;100%&#34;&gt;&#xA;  &lt;source src=&#34;https://slamtech.dev/videos/proj-3d-study-rolling-ball.mp4&#34; type=&#34;video/mp4&#34;&gt;&#xA;&lt;/video&gt;&#xA;&#xA;&lt;p&gt;&lt;img src=&#34;https://slamtech.dev/images/proj-3d-study-orb-game-1.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;video controls width=&#34;100%&#34;&gt;&#xA;  &lt;source src=&#34;https://slamtech.dev/videos/proj-3d-study-orb-game-2.mp4&#34; type=&#34;video/mp4&#34;&gt;&#xA;&lt;/video&gt;&#xA;&#xA;&lt;video controls width=&#34;100%&#34;&gt;&#xA;  &lt;source src=&#34;https://slamtech.dev/videos/proj-3d-study-3d-controller-1.mp4&#34; type=&#34;video/mp4&#34;&gt;&#xA;&lt;/video&gt;&#xA;&#xA;&lt;video controls width=&#34;100%&#34;&gt;&#xA;  &lt;source src=&#34;https://slamtech.dev/videos/proj-3d-study-3d-controller-2.mp4&#34; type=&#34;video/mp4&#34;&gt;&#xA;&lt;/video&gt;&#xA;&#xA;&lt;video controls width=&#34;100%&#34;&gt;&#xA;  &lt;source src=&#34;https://slamtech.dev/videos/proj-3d-study-3d-controller-3.mp4&#34; type=&#34;video/mp4&#34;&gt;&#xA;&lt;/video&gt;</description>
+			</item>
+			<item>
+				<title>Accounting automation</title>
+				<link>https://slamtech.dev/projects/accounting-automation/</link>
+				<pubDate>Wed, 22 Mar 2023 15:01:02 +0200</pubDate>
+				<guid>https://slamtech.dev/projects/accounting-automation/</guid>
+				<description>&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;&#xA;&lt;p&gt;In 2022, I started to take on some software consultancy work as an independent contractor. As the work became more regular, I decided to formally start a small business to represent myself.&lt;/p&gt;&#xA;&lt;p&gt;In the United States, a small business structured as a subchapter S corporation carries some tax benefits and simplification in some areas, but complication in others. Accurate accounting records, including taxes associated with the company and taxes associated with payroll, must be kept. Taxes must be deposited and filed on set schedules, or a penalty is risked for being out of compliance.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Game jam</title>
+				<link>https://slamtech.dev/projects/game-jam/</link>
+				<pubDate>Thu, 01 Dec 2022 23:22:21 +0200</pubDate>
+				<guid>https://slamtech.dev/projects/game-jam/</guid>
+				<description>&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;&#xA;&lt;p&gt;Ever since I was a kid, I wanted to make video games. A huge step in the right direction was joining the Toontown Rewritten [&lt;a href=&#34;https://slamtech.dev/projects/toontown-rewritten&#34;&gt;link&lt;/a&gt;] team, but I realized after a while that I was leaning heavily on my programming ability. Programming is a very versatile skill, which meant I didn&amp;rsquo;t need to develop the game design or other creative skills that I lacked. In short, even though I was a game programmer, I didn&amp;rsquo;t know how to actually make games.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Sellbot Field Offices</title>
+				<link>https://slamtech.dev/projects/toontown-rewritten-sellbot-field-offices/</link>
+				<pubDate>Fri, 03 Dec 2021 23:04:45 +0200</pubDate>
+				<guid>https://slamtech.dev/projects/toontown-rewritten-sellbot-field-offices/</guid>
+				<description>&lt;p&gt;I worked with a full team of artists, designers, programmers, and other technical staff to implement a large game expansion to the Toontown Rewritten MMO. This expansion added new story progression, game mechanics, several new areas, and a slew of rebalancing changes to the base game.&lt;/p&gt;&#xA;&lt;video controls width=&#34;100%&#34;&gt;&#xA;  &lt;source src=&#34;https://slamtech.dev/videos/proj-toontown-field-offices.mp4&#34; type=&#34;video/mp4&#34;&gt;&#xA;&lt;/video&gt;&#xA;&#xA;&lt;p&gt;[&lt;a href=&#34;https://www.nme.com/news/gaming-news/fan-led-mmo-toontown-rewritten-gets-first-major-expansion-tomorrow-3109839&#34;&gt;Media coverage&lt;/a&gt;]&#xA;[&lt;a href=&#34;https://toontownrewritten.com/taskforce/fieldoffices&#34;&gt;Hosted project&lt;/a&gt;]&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>mysqltool</title>
+				<link>https://slamtech.dev/projects/mysqltool/</link>
+				<pubDate>Wed, 23 Jun 2021 14:12:48 +0200</pubDate>
+				<guid>https://slamtech.dev/projects/mysqltool/</guid>
+				<description>&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;&#xA;&lt;p&gt;Managing MySQL database hosts was previously done via a series of scripts invoked inside a special script directory on the hosts themselves. Some examples of these scripts were:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Bootstrap a host: Prepare an empty Linux machine into a MySQL database host, integrated with our existing infrastructure, and ready to have user databases deployed to it.&lt;/li&gt;&#xA;&lt;li&gt;Build a replica: Prepare an empty Linux machine into a replica MySQL database host against a provided existing primary database host.&lt;/li&gt;&#xA;&lt;li&gt;Move CNAME: Move the DNS record associated with a primary or replica MySQL host from one host to another.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;However, since their creation, management and running of these scripts became more problematic over time:&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>mysqlmon</title>
+				<link>https://slamtech.dev/projects/mysqlmon/</link>
+				<pubDate>Tue, 23 Mar 2021 14:05:19 +0200</pubDate>
+				<guid>https://slamtech.dev/projects/mysqlmon/</guid>
+				<description>&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;&#xA;&lt;p&gt;In the past, visibility into database availability and metrics was split into two parts: a series of centralized monitor hosts which would connect to each database host and run a dummy query to check for availability each minute, and a series of monitor scripts, deployed as part of a larger database management application, scheduled to run each minute via cronjob.&lt;/p&gt;&#xA;&lt;p&gt;Monitoring was done by utilizing a built-in alerting framework against the metrics which were posted to an upstream service, sending an alert if pre-defined thresholds were breached.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>MMORPG release system (Toontown)</title>
+				<link>https://slamtech.dev/projects/toontown-rewritten-cicd/</link>
+				<pubDate>Thu, 02 Jan 2020 12:00:00 +0200</pubDate>
+				<guid>https://slamtech.dev/projects/toontown-rewritten-cicd/</guid>
+				<description>&lt;p&gt;&lt;img src=&#34;https://slamtech.dev/images/projects_ttr_cicd_p91.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Toontown Rewritten is a completely free to play, volunteer maintained Massively Multiplayer Online Role-Playing Game (MMORPG) built on top of Disney&amp;rsquo;s Toontown Online, discontinued in 2013.&lt;/p&gt;&#xA;&lt;p&gt;In the process of revitalizing the discontinued Toontown Online, several pieces of infrastructure to get the game up and running needed to be rebuilt. Because the project is volunteer run and did not accept money from players, the infrastructure in place to keep the game running, maintain support, and distribute patches was under a very tight budget constraint.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Toontown Rewritten</title>
+				<link>https://slamtech.dev/projects/toontown-rewritten/</link>
+				<pubDate>Thu, 02 Jan 2020 12:00:00 +0200</pubDate>
+				<guid>https://slamtech.dev/projects/toontown-rewritten/</guid>
+				<description>&lt;p&gt;Toontown Rewritten is a volunteer-run massively multiplayer online role-playing game (MMORPG), with over 1.7 million registered players.&lt;/p&gt;&#xA;&lt;video controls width=&#34;100%&#34;&gt;&#xA;  &lt;source src=&#34;https://slamtech.dev/videos/proj-toontown.mp4&#34; type=&#34;video/mp4&#34;&gt;&#xA;&lt;/video&gt;&#xA;&#xA;&lt;p&gt;[&lt;a href=&#34;https://www.toontownrewritten.com/&#34;&gt;Hosted project&lt;/a&gt;]&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Subnet Calculator</title>
+				<link>https://slamtech.dev/projects/subnet-calculator/</link>
+				<pubDate>Tue, 02 Feb 2016 12:00:00 +0200</pubDate>
+				<guid>https://slamtech.dev/projects/subnet-calculator/</guid>
+				<description>&lt;p&gt;An online IP subnet calculator which allowed you to visualize subnet division by host or by network.&lt;/p&gt;&#xA;&lt;video controls width=&#34;100%&#34;&gt;&#xA;  &lt;source src=&#34;https://slamtech.dev/videos/proj-subnet-calculator.mp4&#34; type=&#34;video/mp4&#34;&gt;&#xA;&lt;/video&gt;</description>
+			</item>
+			<item>
+				<title>Network Monitor</title>
+				<link>https://slamtech.dev/projects/network_monitor/</link>
+				<pubDate>Sat, 02 Jan 2016 12:00:00 +0200</pubDate>
+				<guid>https://slamtech.dev/projects/network_monitor/</guid>
+				<description>&lt;p&gt;I was the backend engineer for a small, deployed network monitoring application with alerting functionality.&lt;/p&gt;&#xA;&lt;video controls width=&#34;100%&#34;&gt;&#xA;  &lt;source src=&#34;https://slamtech.dev/videos/proj-netmon.mp4&#34; type=&#34;video/mp4&#34;&gt;&#xA;&lt;/video&gt;&#xA;&#xA;&lt;p&gt;[&lt;a href=&#34;https://www.spiceworks.com/free-network-monitoring-management-software/&#34;&gt;Hosted project (closed source)&lt;/a&gt;]&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Niu32</title>
+				<link>https://slamtech.dev/projects/niu32/</link>
+				<pubDate>Tue, 02 Jun 2015 12:00:00 +0200</pubDate>
+				<guid>https://slamtech.dev/projects/niu32/</guid>
+				<description>&lt;p&gt;Niu32 is a specification for a simple 32-bit instruction set architecture that is simple to implement on hardware. It is byte- and word-addressable, and includes an assembler written in Python 3 that outputs machine code in Altera MIF format, ready to be loaded into instruction memory.&lt;/p&gt;&#xA;&lt;p&gt;[&lt;a href=&#34;https://github.com/OzuYatamutsu/Niu32&#34;&gt;Project on GitHub&lt;/a&gt;]&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Rat Transport Protocol</title>
+				<link>https://slamtech.dev/projects/rat-transport-protocol/</link>
+				<pubDate>Mon, 13 Apr 2015 12:00:00 +0200</pubDate>
+				<guid>https://slamtech.dev/projects/rat-transport-protocol/</guid>
+				<description>&lt;p&gt;&lt;img src=&#34;https://slamtech.dev/images/proj-rat-diagram.png&#34; alt=&#34;&#34;&gt;&#xA;RAT is a specification of transport-layer extension to UDP that adds some of the reliability of TCP, including session establishment and reliable transmission, without all of the overhead of a full TCP header and processing.&lt;/p&gt;&#xA;&lt;p&gt;[&lt;a href=&#34;https://github.com/OzuYatamutsu/rat-transport-protocol&#34;&gt;Project on GitHub&lt;/a&gt;]&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>16-bit processor and ISA</title>
+				<link>https://slamtech.dev/projects/cs2200-proj1/</link>
+				<pubDate>Sun, 14 Sep 2014 12:00:00 +0200</pubDate>
+				<guid>https://slamtech.dev/projects/cs2200-proj1/</guid>
+				<description>&lt;p&gt;A series of logic circuits built in the simulation software Logisim which simulates a 16-bit processor, able to load and execute assembled hex code from its own defined instruction set.&lt;/p&gt;&#xA;&lt;video controls width=&#34;100%&#34;&gt;&#xA;  &lt;source src=&#34;https://slamtech.dev/videos/cs2200-proj1_16bit_processor.mp4&#34; type=&#34;video/mp4&#34;&gt;&#xA;&lt;/video&gt;&#xA;&#xA;&lt;p&gt;[&lt;a href=&#34;https://github.com/OzuYatamutsu/cs2200-proj1&#34;&gt;Project on GitHub&lt;/a&gt;]&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

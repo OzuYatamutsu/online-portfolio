@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head><title>mysqlmon &ndash; slamtech</title>
+<meta name="description" content="Backend Infrastructure Engineer">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8"/>
+
+
+
+<link rel="stylesheet" href="https://slamtech.dev/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://slamtech.dev/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://slamtech.dev/css/palettes/windows-95.css">
+<link rel="stylesheet" href="https://slamtech.dev/css/risotto.css">
+<link rel="stylesheet" href="https://slamtech.dev/css/custom.css">
+
+
+<link rel="icon" href="https://slamtech.dev/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="https://slamtech.dev/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://slamtech.dev/favicon-16x16.png">
+<link rel="apple-touch-icon" href="https://slamtech.dev/apple-touch-icon.png">
+<link rel="manifest" href="https://slamtech.dev/site.webmanifest">
+
+
+
+
+
+<meta property="og:title" content="mysqlmon &ndash; slamtech" />
+<meta property="og:url" content="https://slamtech.dev/projects/mysqlmon/" />
+
+  <meta property="og:description" content="Distributed telemetry agent for production databases &ndash; "/> 
+
+<meta property="og:locale" content="en-us" />
+<meta property="og:image" content="" />
+</head>
+
+    <body>
+        <div class="page">
+
+            <header class="page__header"><nav class="page__nav main-nav">
+    <ul>
+      <li class="nomarker"><h1 class="page__logo"><a href="https://slamtech.dev/" class="page__logo-inner">slamtech</a></h1></li>
+    
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="https://slamtech.dev/credentials/" title="">Credentials</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="https://slamtech.dev/hire/" title="">Hire</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="https://slamtech.dev/projects/" title="">Projects</a></li>
+    
+    </ul>
+</nav>
+
+</header>
+
+            <section class="page__body">
+    <header class="content__header">
+        <h1>mysqlmon</h1>
+    </header>
+    <div class="content__body">
+        <h2 id="background">Background</h2>
+<p>In the past, visibility into database availability and metrics was split into two parts: a series of centralized monitor hosts which would connect to each database host and run a dummy query to check for availability each minute, and a series of monitor scripts, deployed as part of a larger database management application, scheduled to run each minute via cronjob.</p>
+<p>Monitoring was done by utilizing a built-in alerting framework against the metrics which were posted to an upstream service, sending an alert if pre-defined thresholds were breached.</p>
+<p>This approach had many limitations:</p>
+<ul>
+<li>The monitoring scripts often crashed without proper error logs, resulting in alerting false positives. We had limited ability to catch them prior to deploying them due to lack of unit testing in the application.</li>
+<li>The alerts sent via the built-in framework were generic to a fault, simply warning that a threshold for a specific metric was breached or missing, without any additional context or instructions to resolve the issue.</li>
+</ul>
+<p><img src="/images/projects_mysqlmon_f00.png" alt=""></p>
+<ul>
+<li>The centralized monitor hosts were single points of failure; if the availability script didn&rsquo;t run during a minute for any reason, it would be reported as a mass availability outage across all databases in the datacenter.</li>
+<li>The availability script was single-threaded and O(n); as more database hosts were added to a datacenter, the script would take longer to complete.</li>
+<li>Alerts often had dependencies on each other; we had a few well-known patterns where, if something went wrong on a database host, we expected multiple alerts to fire at once.</li>
+<li>We had limited control over the alerts sent via the alerting framework; as examples, alerts were often queued to be sent up to 5 minutes after an issue surfaced in a host, and alerts which were suppressed often spontaneously unsuppressed themselves for one minute before suppressing themselves again.</li>
+<li>In the event of maintenance, we had no functionality to preemptively suppress all alerting for a host en masse. The solution at the time was to warn the oncall for the flood of alerts that would soon arrive prior to maintenance.</li>
+</ul>
+<h2 id="assertions">Assertions</h2>
+<p>All monitoring and alerting functionality was isolated into individual checks, subject to the following rules:</p>
+<ul>
+<li>Checks should be isolated from other operational functionality.</li>
+<li>Checks should run independently from one another.</li>
+<li>Checks should be written in a clear, consistent format.</li>
+<li>Checks should have unit tests written against them.</li>
+<li>All checks should run consistently every minute, and all should complete within 1 minute.</li>
+</ul>
+<p>All control on alerting would be subject to the following rules:</p>
+<ul>
+<li>If an alert is sent, an oncall should receive it within seconds.</li>
+<li>Alerts should contain a clear description of what went wrong, clear context behind the issue, clear instructions as to what the oncall should do next, and clear instructions as to how the oncall can suppress the alerts.</li>
+<li>Alerts should be able to be suppressed at any time, including prior to maintenance, at the alert level, host level, or datacenter level.</li>
+</ul>
+<h2 id="design">Design</h2>
+<p>I designed a monitoring agent, mysqlmon, to hold all possible checks which could be performed on a host. All checks were required to confirm to a particular code pattern and were required to have unit tests. This requirement was enforced via another unit test, which would fail if a new check wasn&rsquo;t written in such a manner.</p>
+<p>To strictly enforce metrics being emitted every minute, all checks were run concurrently as individual processes, with an external watcher responsible for killing any process which did not complete within 45 seconds. Most processes completed within a few milliseconds, with a full suite of checks completing within an average of 10 seconds.</p>
+<p>All alerts were designed to be sent via a customized template, providing substantially more context to the oncall to take action.</p>
+<p><img src="/images/projects_mysqlmon_g55.png" alt=""></p>
+<p>Upon rollout of a change to the alerting agent, the change would be canaried against a subset of hosts in each datacenter, and automatically promoted to the rest of the fleet if a set of pre-defined rules passed, or rolled back if they failed.</p>
+<p><img src="/images/projects_mysqlmon_w11.png" alt=""></p>
+<p>For checks which couldn&rsquo;t be performed on the host &ndash; for example, agent availability (which would be affected if the host went down) &ndash; a service would sit in each datacenter, named mysqlmon-master. The service would be responsible for monitoring availability of the individual agents on the hosts, managing alert suppressions created by the team, as well as exposing analytics regarding alerting and suppressions for review at a later time.</p>
+<p><img src="/images/projects_mysqlmon_w57.png" alt=""></p>
+<p>Availability metrics were emitted to a standard location in a standard format, which allowed a live availability breakdown by service to be exposed to external teams.</p>
+<p><img src="/images/projects_mysqlmon_i88.png" alt=""></p>
+<p>An API on mysqlmon-master was exposed to manage suppressions, allowing any piece of automation to manage alert suppressions if performing an operation expected to produce alerts. A CLI tool distributed to the team was also created to easily create suppressions from the terminal. (This functionality was later rolled into mysqltool, also described in detail elsewhere on my portfolio.)</p>
+<p><img src="/images/projects_mysqlmon_h10.png" alt=""></p>
+<p>mysqlmon-master was deployed as a set of three in each datacenter, loadbalanced behind a single service name. A failure in one host would result in automatic failover to another within the same datacenter with no loss in service availability. A failure in a datacenter would surface as an alert from an external alerting service to the oncall, who could then respond by failing over the service to another datacenter.</p>
+<h2 id="result">Result</h2>
+<p>The release initially resulted in an increase in overall alert volume sent to the team, due to many identified gaps in alerting from the previous solution being surfaced. However, alert volume has been steadily decreasing (from an average of 1500+ alerts sent per week to an average of less than 1000 between August 2020 and August 2021), likely as a result of alerting and suppression analytics being exposed for weekly review. Time spent determining the root cause of each alert was greatly reduced, from several minutes to only a few seconds.</p>
+<p>A few months after initial release, all existing monitoring solutions were decommissioned.</p>
+<p>Metrics sent by mysqlmon were distributed publicly to external teams, to reduce engagement of our oncall for context behind any issues on the database side.</p>
+<p><img src="/images/projects_mysqlmon_y79.png" alt=""></p>
+<p>The following year, alerting and suppression management compatible with mysqlmon and mysqlmon suppressions began to be integrated to other automation outside of the agent, and work began to integrate autoremediation of certain alert patterns into mysqlmon.</p>
+
+    </div>
+    <footer class="content__footer"></footer>
+
+            </section>
+
+            <section class="page__aside">
+                <div class="aside__about">
+<div class="aside__about">
+    
+    
+<h1 class="about__title">Sean Lam</h1>
+<p class="about__description">Backend Infrastructure Engineer</p>
+</div>
+
+
+<ul class="aside__social-links">
+    
+    <li>
+        <a href="https://github.com/OzuYatamutsu" rel="me" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://www.linkedin.com/in/slam36/" rel="me" aria-label="LinkedIn" title="LinkedIn"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="mailto:run@slamtech.dev" rel="me" aria-label="Email" title="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+</ul>
+
+</div>
+                <hr>
+                <div class="aside__content">
+    Resume available <a href="/files/resume.pdf">here</a>.
+
+                </div>
+            </section>
+
+            <footer class="page__footer"><p class="advertisement">Site generated by <a href="https://github.com/OzuYatamutsu/online-portfolio">OzuYatamutsu/online-portfolio</a>.</p>
+</footer>
+
+        </div>
+    </body>
+
+</html>

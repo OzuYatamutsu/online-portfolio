@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head><title>MMORPG release system (Toontown) &ndash; slamtech</title>
+<meta name="description" content="Backend Infrastructure Engineer">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8"/>
+
+
+
+<link rel="stylesheet" href="https://slamtech.dev/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://slamtech.dev/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://slamtech.dev/css/palettes/windows-95.css">
+<link rel="stylesheet" href="https://slamtech.dev/css/risotto.css">
+<link rel="stylesheet" href="https://slamtech.dev/css/custom.css">
+
+
+<link rel="icon" href="https://slamtech.dev/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="https://slamtech.dev/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://slamtech.dev/favicon-16x16.png">
+<link rel="apple-touch-icon" href="https://slamtech.dev/apple-touch-icon.png">
+<link rel="manifest" href="https://slamtech.dev/site.webmanifest">
+
+
+
+
+
+<meta property="og:title" content="MMORPG release system (Toontown) &ndash; slamtech" />
+<meta property="og:url" content="https://slamtech.dev/projects/toontown-rewritten-cicd/" />
+
+  <meta property="og:description" content="Helm-based deployment of online game updates &ndash; "/> 
+
+<meta property="og:locale" content="en-us" />
+<meta property="og:image" content="" />
+</head>
+
+    <body>
+        <div class="page">
+
+            <header class="page__header"><nav class="page__nav main-nav">
+    <ul>
+      <li class="nomarker"><h1 class="page__logo"><a href="https://slamtech.dev/" class="page__logo-inner">slamtech</a></h1></li>
+    
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="https://slamtech.dev/credentials/" title="">Credentials</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="https://slamtech.dev/hire/" title="">Hire</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="https://slamtech.dev/projects/" title="">Projects</a></li>
+    
+    </ul>
+</nav>
+
+</header>
+
+            <section class="page__body">
+    <header class="content__header">
+        <h1>MMORPG release system (Toontown)</h1>
+    </header>
+    <div class="content__body">
+        <p><img src="/images/projects_ttr_cicd_p91.jpg" alt=""></p>
+<p>Toontown Rewritten is a completely free to play, volunteer maintained Massively Multiplayer Online Role-Playing Game (MMORPG) built on top of Disney&rsquo;s Toontown Online, discontinued in 2013.</p>
+<p>In the process of revitalizing the discontinued Toontown Online, several pieces of infrastructure to get the game up and running needed to be rebuilt. Because the project is volunteer run and did not accept money from players, the infrastructure in place to keep the game running, maintain support, and distribute patches was under a very tight budget constraint.</p>
+<p>As of this writing, Toontown runs in a Kubernetes instance across a few virtual machines provided for this purpose on a minor cloud provider.</p>
+<p>The deployment infrastructure, largely designed due to necessity at the project&rsquo;s inception, was a source of technical debt. A deployment could only be done by a subset of the small programming team, as an internal runbook developed out of habit (undocumented), and involved setting up a local Kubernetes deployment environment and access tokens before invoking a series of commands manually.</p>
+<p>In 2020, due to factors beyond our control (not as a result of technical debt), this deployment mechanism was rendered unusable and we were forced to address the issue from scratch.</p>
+<h2 id="problems-to-solve">Problems to solve</h2>
+<ul>
+<li>We were unable to deploy client and server updates to the game. (However, because we had only lost control of the deployment infrastructure, the game availability was not at risk.)</li>
+<li>We wanted to design a deployment system which was automated as much as possible.</li>
+<li>We wanted the deployment system to be able to be invoked by any technical member of the team (i.e., any programmer, QA, devops staff, leads, etc.)</li>
+<li>We needed to develop and test this system under the existing constraints of our machines, without compromising production traffic.</li>
+</ul>
+<h2 id="solution">Solution</h2>
+<p>An artifact of the broken existing deployment system was a deployment.json file, used to specify all Kubernetes resources related to the deployment. We decided to split the artifact into several pieces and package them all together into a Helm chart.</p>
+<p>Helm charts are versioned collections of declared Kubernetes resources, with templated configuration filled in at deployment or upgrade time. Since we maintained three game environments (dev, QA, and prod), this allowed us to design our package in a generic fashion, and enable/disable/configure features or variables as required.</p>
+<p><img src="/images/projects_ttr_cicd_l02.png" alt=""></p>
+<p>We wrote a CI deployment flow to automatically assemble, package, and deploy this Helm chart to a Helm repository hosted within the Kubernetes cluster. This repository was specified via a Dockerfile to produce an image, which was then deployed.</p>
+<p>The automation to deploy an update across an environment, or distribute a client update, was written but kept deliberately manual (as an untimely release of either had the potential to cause availability issues). When ready, this automation could be triggered by clicking a button.</p>
+<p><img src="/images/projects_ttr_cicd_f92.png" alt=""></p>
+<p>Finally, everything to expect during a deployment, including the precautions to take before deploying to production, was documented in a readme file within the deployment repository.</p>
+<p><img src="/images/projects_ttr_cicd_g98.png" alt=""></p>
+<h2 id="result">Result</h2>
+<p>Other than recovering the ability to publish deployments, the team had the bonus effect of no longer needing to wait for dedicated availability of the devops members of the team to deploy an update. Once an update was approved, anyone would be able to deploy it. This increased update velocity against the dev and QA environments, allowing changes to be tested faster where possible without devops involvement.</p>
+
+    </div>
+    <footer class="content__footer"></footer>
+
+            </section>
+
+            <section class="page__aside">
+                <div class="aside__about">
+<div class="aside__about">
+    
+    
+<h1 class="about__title">Sean Lam</h1>
+<p class="about__description">Backend Infrastructure Engineer</p>
+</div>
+
+
+<ul class="aside__social-links">
+    
+    <li>
+        <a href="https://github.com/OzuYatamutsu" rel="me" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://www.linkedin.com/in/slam36/" rel="me" aria-label="LinkedIn" title="LinkedIn"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="mailto:run@slamtech.dev" rel="me" aria-label="Email" title="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+</ul>
+
+</div>
+                <hr>
+                <div class="aside__content">
+    Resume available <a href="/files/resume.pdf">here</a>.
+
+                </div>
+            </section>
+
+            <footer class="page__footer"><p class="advertisement">Site generated by <a href="https://github.com/OzuYatamutsu/online-portfolio">OzuYatamutsu/online-portfolio</a>.</p>
+</footer>
+
+        </div>
+    </body>
+
+</html>
