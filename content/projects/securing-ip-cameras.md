@@ -23,6 +23,8 @@ There were a few security issues with this approach:
 
 The following alternate architecture was proposed and ultimately adapted:
 
+![](/images/projects_ipcamera_02.png)
+
 Two Raspberry Pi 5 devices were used to create a secure tunnel between sites, allowing both clients and cameras in both networks to write to the DVR and to be accessed safely without exposing them to the public internet. The same software used to create the tunnel also allowed secure remote access to either network by any client presenting the proper keys.
 
 Additionally, monitoring software was installed on both devices to track reliability of the camera system over time.
