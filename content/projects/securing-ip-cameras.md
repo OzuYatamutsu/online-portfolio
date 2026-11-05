@@ -9,6 +9,8 @@ description = "Locking down security camera access and video archival via implem
 
 I was presented with an existing IP security camera system deployed to two sites, connected to a DVR in one of the sites. The DVR software was responsible for archiving captured security footage as well as presenting a dashboard to access live camera feeds.
 
+![](/images/projects_ipcamera_02.png)
+
 To manage remote access to the DVR, its management interface was port-forwarded to the public internet. To manage access between the DVR and the cameras not on its site, all the cameras were port-forwarded to the public internet as well.
 
 There were a few security issues with this approach:
