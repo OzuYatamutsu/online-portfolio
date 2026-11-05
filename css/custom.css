@@ -1,0 +1,4 @@
+.page__logo-inner:after {
+    content: "]:~$";
+    color: var(--bg);
+}

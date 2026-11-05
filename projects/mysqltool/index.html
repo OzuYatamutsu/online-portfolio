@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head><title>mysqltool &ndash; slamtech</title>
+<meta name="description" content="Backend Infrastructure Engineer">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8"/>
+
+
+
+<link rel="stylesheet" href="https://slamtech.dev/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://slamtech.dev/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://slamtech.dev/css/palettes/windows-95.css">
+<link rel="stylesheet" href="https://slamtech.dev/css/risotto.css">
+<link rel="stylesheet" href="https://slamtech.dev/css/custom.css">
+
+
+<link rel="icon" href="https://slamtech.dev/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="https://slamtech.dev/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://slamtech.dev/favicon-16x16.png">
+<link rel="apple-touch-icon" href="https://slamtech.dev/apple-touch-icon.png">
+<link rel="manifest" href="https://slamtech.dev/site.webmanifest">
+
+
+
+
+
+<meta property="og:title" content="mysqltool &ndash; slamtech" />
+<meta property="og:url" content="https://slamtech.dev/projects/mysqltool/" />
+
+  <meta property="og:description" content="Command line tool to automate operational workflows &ndash; "/> 
+
+<meta property="og:locale" content="en-us" />
+<meta property="og:image" content="" />
+</head>
+
+    <body>
+        <div class="page">
+
+            <header class="page__header"><nav class="page__nav main-nav">
+    <ul>
+      <li class="nomarker"><h1 class="page__logo"><a href="https://slamtech.dev/" class="page__logo-inner">slamtech</a></h1></li>
+    
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="https://slamtech.dev/credentials/" title="">Credentials</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="https://slamtech.dev/hire/" title="">Hire</a></li>
+    
+    <li class="main-nav__item"><a class="nav-main-item" href="https://slamtech.dev/projects/" title="">Projects</a></li>
+    
+    </ul>
+</nav>
+
+</header>
+
+            <section class="page__body">
+    <header class="content__header">
+        <h1>mysqltool</h1>
+    </header>
+    <div class="content__body">
+        <h2 id="background">Background</h2>
+<p>Managing MySQL database hosts was previously done via a series of scripts invoked inside a special script directory on the hosts themselves. Some examples of these scripts were:</p>
+<ul>
+<li>Bootstrap a host: Prepare an empty Linux machine into a MySQL database host, integrated with our existing infrastructure, and ready to have user databases deployed to it.</li>
+<li>Build a replica: Prepare an empty Linux machine into a replica MySQL database host against a provided existing primary database host.</li>
+<li>Move CNAME: Move the DNS record associated with a primary or replica MySQL host from one host to another.</li>
+</ul>
+<p>However, since their creation, management and running of these scripts became more problematic over time:</p>
+<ul>
+<li>The scripts did not display progress, leading to confusion as to whether they were running or hung.</li>
+<li>The scripts hung or crashed often, due to a combination of script, metadata, or networking issues.</li>
+<li>When the scripts crashed, they didn&rsquo;t provide any reason (stack trace or otherwise) as to the reason for their failure, making issues close to impossible to identify.</li>
+<li>The scripts pulled down configuration and software packages from &ldquo;special hosts&rdquo; which also hosted databases &ndash; if these databases were ever failed over to a replica, the scripts to prepare new hosts would fail.</li>
+<li>The network security policy, designed with users in mind, changed significantly since initial development of the scripts. As a result, scripts would often get stuck on user input, wait for a password/2-factor token which would never arrive, or time out due to the firewall. Some workarounds were added to the scripts, which did not consistently work.</li>
+</ul>
+<p>The ultimate solution was to migrate to a host management platform built on top of Puppet, which was in development by another team at the time. However, to buy our team time, something needed to be done as an intermediary solution without too much change/retraining into how the team was accustomed to preparing and managing hosts.</p>
+<h2 id="assertions">Assertions</h2>
+<p>All operations on a host were broken down into individual runbooks, with the following design goals in mind:</p>
+<ul>
+<li>Runbooks should be atomic; they should completely succeed or be completely rolled back.</li>
+<li>Runbooks should be able to be run from a consistent location.</li>
+<li>Runbooks should be written in a clear pattern, as a series of steps from top to bottom, making it easy for a human to read and parse what it does.</li>
+<li>Runbooks should never get stuck; intermediary steps should always be associated with an active process or function call or fail gracefully. A state which is waiting on user input should be forwarded to the user who started the runbook or fail immediately if user input is not possible.</li>
+<li>Runbooks should plan for failure; a failure in an intermediary step should explain to the user exactly what has failed, the stack trace (if available), and manual resolution steps to complete the runbook manually from the point at which it has failed.</li>
+<li>Runbooks should fail as early as possible; they should prompt for parameters, decide, and verify as much as possible prior to executing anything, as not doing anything is cheaper than failing halfway and rolling back.</li>
+</ul>
+<h2 id="design">Design</h2>
+<p>Development of mysqltool began by reverse-engineering existing scripts into a series of exact manual steps that a human could run. This was a time-consuming process, as these scripts tended to be a bit messy and a bit over-optimized; sacrificing code clarity for the sake of minor performance optimizations.</p>
+<p>Next, for each script, each step which relied on a prior decision to be made was flagged.</p>
+<p><em><strong>If the host is to run MySQL version 8.x,</strong></em> run&hellip;</p>
+<p><em><strong>If the host exists in the staging environment,</strong></em> change&hellip;</p>
+<p>At this point, <em><strong>prompt the user for their password&hellip;</strong></em></p>
+<p>Populating all of these variables was merged into a single step called step 0, which would be run prior to the others. In addition, combinations of variables which would lead to undefined behavior later on were identified as situations where the new script would fail early.</p>
+<p><img src="/images/projects_mysqltool_o99.png" alt=""></p>
+<p>The exact manual steps were committed into code to start the runbook. Steps which required a decision were exposed as templates, which would be fully rendered after completion of step 0. Configuration files were translated from existing individual files (on the &ldquo;special hosts&rdquo; mentioned above) tailored for several different configurations to single, templated files in code. That way, in the event of failure, the user would be presented with a completed manual runbook from the point of failure and would not have to make any decisions themselves.</p>
+<p><img src="/images/projects_mysqltool_i22.png" alt=""></p>
+<p>Each manual step was translated into an automated step in code. Each automated step, when run, would show:</p>
+<ul>
+<li>The numbered step in the runbook</li>
+<li>The number of steps remaining</li>
+<li>A human-readable summary of what the runbook was doing in that step</li>
+<li>Exact shell commands executed within that step (if any)</li>
+<li>Stdout/stderr returned as a result (if any)</li>
+</ul>
+<p><img src="/images/projects_mysqltool_g09.png" alt=""></p>
+<p>Finally, all runbooks were wrapped into a single executable and automatically distributed to the machines of all members of the team. They could now be invoked from the user&rsquo;s dev machine instead of having to connect remotely to the machine to be prepared.</p>
+<p><img src="/images/projects_mysqltool_g06.png" alt=""></p>
+<h2 id="result">Result</h2>
+<p>Host management overhead reduced significantly after mysqltool was made available, with the old scripts quickly falling into disuse. Time spent preparing a host reduced from an average of 40 minutes, including time for active troubleshooting, to about 15 minutes of largely &ldquo;fire-and-forget&rdquo; invocation. The number of hosts with inconsistent configuration or in a half-completed state dropped to nearly 0 a few months after the tool was released, and remained consistent ever since. The runbook model of structuring the automation was easy to understand, allowed new engineers to quickly submit bugfixes soon after their onboarding, and was reused to build further automation by other members of the team.</p>
+
+    </div>
+    <footer class="content__footer"></footer>
+
+            </section>
+
+            <section class="page__aside">
+                <div class="aside__about">
+<div class="aside__about">
+    
+    
+<h1 class="about__title">Sean Lam</h1>
+<p class="about__description">Backend Infrastructure Engineer</p>
+</div>
+
+
+<ul class="aside__social-links">
+    
+    <li>
+        <a href="https://github.com/OzuYatamutsu" rel="me" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="https://www.linkedin.com/in/slam36/" rel="me" aria-label="LinkedIn" title="LinkedIn"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+    <li>
+        <a href="mailto:run@slamtech.dev" rel="me" aria-label="Email" title="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>&nbsp;
+    </li>
+    
+</ul>
+
+</div>
+                <hr>
+                <div class="aside__content">
+    Resume available <a href="/files/resume.pdf">here</a>.
+
+                </div>
+            </section>
+
+            <footer class="page__footer"><p class="advertisement">Site generated by <a href="https://github.com/OzuYatamutsu/online-portfolio">OzuYatamutsu/online-portfolio</a>.</p>
+</footer>
+
+        </div>
+    </body>
+
+</html>
