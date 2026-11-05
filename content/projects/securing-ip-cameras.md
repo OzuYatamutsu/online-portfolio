@@ -25,3 +25,4 @@ Two Raspberry Pi 5 devices were used to create a secure tunnel between sites, al
 
 Additionally, monitoring software was installed on both devices to track reliability of the camera system over time.
 
+![](/images/projects_ipcamera_01.png)
